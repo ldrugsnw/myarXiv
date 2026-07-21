@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import arxiv
+
 app = FastAPI()
 
 app.add_middleware(
@@ -14,3 +16,32 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"message": "Hello MyArxiv!"}
+
+@app.get("/papers")
+def get_papers():
+  """  client = arxiv.Client()
+
+    search = arxiv.Search(
+        query = "LLM",
+        max_results=10,
+        sort_by=arxiv.SortCriterion.SubmittedDate
+    )
+
+    papers = []
+
+    for paper in client.results(search):
+        papers.append({
+            "title": paper.title,
+            "author": ', '.join([author.name for author in paper.authors]),
+            "published_date": paper.published.date()
+        })
+
+    return papers """
+
+  return [
+        {
+            "title": "test",
+            "author": "shin",
+            "published_date": "2026-07-17"
+        }
+    ]
