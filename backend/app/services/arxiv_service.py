@@ -1,11 +1,11 @@
 import arxiv
 
-def search_papers():
+def search_papers(query: str):
 
     client = arxiv.Client() # arxiv 서버와 대화하는 담당자 arxiv 서버 입장에서 고객
 
     search = arxiv.Search(
-        query = "LLM",
+        query = query,
         max_results = 1,  # 최대 개수 
         sort_by = arxiv.SortCriterion.SubmittedDate
     )
