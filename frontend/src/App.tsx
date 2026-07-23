@@ -1,33 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type {Paper} from "./types/paper"
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [query, setQuery] = useState("");
+  // query는 문자열이어서 " "가 맞는데
   // useState <- 이 변수들은 화면이랑 연결된 변수이다.
 
-  useEffect(() => {
-    // fetch는 주문하기!!! 주방! 데이터 좀 주세요!
-    fetch("https://ideal-trout-7v7wxxqvgw6xhrgvq-8000.app.github.dev/")
-      .then((res) => {
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-    return res.json();
-    })
-    .then((data) => {
-      setMessage(data.message);
-    })
-    .catch((err) => {
-      console.error(err);
-      setMessage(err.message);
-    });
-      }, []);
+  const [papers, setPapers] = useState<Paper[]>([]);
+  // papers는 리스트라..
 
   return (
-    <div>
-      <h1>MyArxiv</h1>
-      <h2>{message}</h2>
-    </div>
+  <div>
+    <h1>MyArxiv</h1>
+
+
+  <input 
+    value={query} 
+    onChange={(e)=> setQuery(e.target.value)} // e <= event
+    />
+
+
+  <button onClick={searchPapers}>
+    검색
+  </button>
+
+  {
+    papers.map((paper) => (
+        <div key={paper.id}>
+            {paper.title}
+        </div>
+    ))
+}
+
+  </div>
   );
+
+  function searchPapers(){
+    fetch(`https://ideal-trout-7v7wxxqvgw6xhrgvq-8000.app.github.dev/papers?query=${query}`)
+      .then((res)=> res.json())
+      .then((data)=>setPapers(data.papers))
+  }
 }
 
 export default App;
