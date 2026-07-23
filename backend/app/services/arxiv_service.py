@@ -5,7 +5,7 @@ def search_papers(query: str):
     client = arxiv.Client(
         page_size=5,
         delay_seconds=3,
-        num_retries=3git
+        num_retries=3
     ) # arxiv 서버와 대화하는 담당자 arxiv 서버 입장에서 고객
 
     search = arxiv.Search(
